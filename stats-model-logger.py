@@ -3,7 +3,7 @@
 ################################################################################
 # stats-model-logger.py - Periodically saves stats via model to rsyslog
 #
-# Copyright 2016 by David Brenner Jr <david.brenner.jr@gmail.com>
+# Copyright 2016-2017 by David Brenner Jr <david.brenner.jr@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
