@@ -31,6 +31,7 @@ try:
   import json
   import collections
   import threading
+  import syslog
 except ImportError:
   print("FAILURE: Failed to import required modules")
   sys.exit()
@@ -82,16 +83,6 @@ def check_distribution():
 # package named "curl", else throw OS error then display failure message
 # and exit agent.
 def check_dependencies():
-  try:
-    package, _ = syscmd("dpkg-query -W --showformat='${Package} ${Status} ${Version}\n' util-linux")
-    package = package.strip()
-    if "util-linux install ok installed" not in package:
-      raise OSError
-    else:
-      pass
-  except OSError:
-    print("FAILURE: logger not installed: %s" % package)
-    sys.exit()
   try:
     package, _ = syscmd("dpkg-query -W --showformat='${Package} ${Status} ${Version}\n' rsyslog")
     package = package.strip()
@@ -248,7 +239,7 @@ def log_data():
   check_rsyslog_status()
   # use logger to send data to local rsyslog service
   if status_flag is True:    
-    _, _ = syscmd("logger -t SERVER_STATS_COLLECTOR.PY %s" % data_model)
+    syslog.syslog("SERVER_STATS_COLLECTOR.PY %s" % data_model)
   # append data to new file
   else:
     timestamp = calendar.timegm(time.gmtime())
